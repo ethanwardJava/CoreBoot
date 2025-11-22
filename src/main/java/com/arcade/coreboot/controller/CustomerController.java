@@ -3,8 +3,8 @@ package com.arcade.coreboot.controller;
 import com.arcade.coreboot.entity.Customer;
 import com.arcade.coreboot.service.CustomerService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,6 +21,11 @@ public class CustomerController {
     @GetMapping("")
     public List<Customer> getAllCustomers(){
         return customerService.findAll();
+    }
+
+    @GetMapping("/{name}")
+    public List<Customer> getCustomerByName(@PathVariable("name") String name){
+        return customerService.findByName(name);
     }
 }
 
