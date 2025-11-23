@@ -19,7 +19,7 @@ public class CustomerController {
     private final CustomerService customerService;
 
 
-    @GetMapping("")
+    @GetMapping("/")
     public List<Customer> getAllCustomers() {
         return customerService.findAll();
     }
@@ -45,7 +45,7 @@ public class CustomerController {
         return customerService.findByEmail(email);
     }
 
-    @PutMapping("/new")
+    @PostMapping("/new")  /* Bug here fixed (I was Put mapping instead of Post mapping) */
     public String addUser(@RequestBody @Valid Customer customer) {
         customerService.addCustomer(customer);
         return "Success";
