@@ -1,8 +1,7 @@
 package com.arcade.coreboot.service;
 
 import com.arcade.coreboot.entity.Customer;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import jakarta.validation.Valid;
 
 import java.util.List;
 
@@ -11,4 +10,10 @@ public interface CustomerService {
     List<Customer> findAll();
 
     List<Customer> findByName(String name);
+
+    Customer findBySearch(String name, String email);
+
+    Customer findByEmail(String email);
+
+    void addCustomer(@Valid Customer customer);
 }

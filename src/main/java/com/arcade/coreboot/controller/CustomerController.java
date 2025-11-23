@@ -2,11 +2,9 @@ package com.arcade.coreboot.controller;
 
 import com.arcade.coreboot.entity.Customer;
 import com.arcade.coreboot.service.CustomerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,13 +17,31 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping("")
-    public List<Customer> getAllCustomers(){
+    public List<Customer> getAllCustomers() {
         return customerService.findAll();
     }
 
+    @GetMapping("/search")
+    public Customer findCustomerByDetails(@RequestParam(required = false, defaultValue = "Alice") String name,
+                                          @RequestParam(required = false) String email) {
+        return customerService.findBySearch(name, email);
+    }
+
     @GetMapping("/{name}")
-    public List<Customer> getCustomerByName(@PathVariable("name") String name){
+    public List<Customer> getCustomerByName(@PathVariable("name") String name) {
         return customerService.findByName(name);
     }
+
+    @GetMapping("/email")
+    public Customer findCustomerByEmail(@RequestParam(name = "email") String email) {
+        return customerService.findByEmail(email);
+    }
+
+    @PutMapping("/new")
+    public String addUser(@RequestBody @Valid Customer customer) {
+        customerService.addCustomer(customer);
+        return "Success";
+    }
+
 }
 
