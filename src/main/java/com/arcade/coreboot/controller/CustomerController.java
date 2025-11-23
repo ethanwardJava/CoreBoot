@@ -4,6 +4,8 @@ import com.arcade.coreboot.entity.Customer;
 import com.arcade.coreboot.service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +18,15 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
+
     @GetMapping("")
     public List<Customer> getAllCustomers() {
         return customerService.findAll();
+    }
+
+    @GetMapping("/all")
+    public Page<Customer> getCustomers(Pageable pageable) {
+        return customerService.findAllPage(pageable);
     }
 
     @GetMapping("/search")

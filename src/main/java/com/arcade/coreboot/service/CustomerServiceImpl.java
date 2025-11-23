@@ -4,6 +4,9 @@ import com.arcade.coreboot.entity.Customer;
 import com.arcade.coreboot.repository.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +17,7 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository;
+
 
     @Override
     public List<Customer> findAll() {
@@ -28,11 +32,9 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public List<Customer> findByName(String name) {
         var customers = customerRepository.findByName(name);
-        if (customers.isEmpty()) {
-            return null;
-        }
-        return customerRepository.findByName(name);
+        return customers.isEmpty() ? List.of() : customers;
     }
+
 
     @Override
     public Customer findBySearch(String name, String email) {
@@ -52,5 +54,16 @@ public class CustomerServiceImpl implements CustomerService {
     public void addCustomer(Customer customer) {
         customerRepository.save(customer);
     }
+
+
+
+    @Override
+    public Page<Customer> findAllPage(Pageable pageable) {
+        // default to page 0, size 10 if pageable is null
+        Pageable effectivePageable = (pageable == null) ? PageRequest.of(0, 10) : pageable;
+        return customerRepository.findAll(effectivePageable);
+    }
+
+
 
 }
