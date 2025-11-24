@@ -1,7 +1,7 @@
 package com.arcade.coreboot.controller;
 
 import com.arcade.coreboot.entity.Customer;
-import com.arcade.coreboot.service.CustomerService;
+import com.arcade.coreboot.service.customer.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

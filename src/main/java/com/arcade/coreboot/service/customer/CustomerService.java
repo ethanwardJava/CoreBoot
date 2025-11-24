@@ -1,4 +1,4 @@
-package com.arcade.coreboot.service;
+package com.arcade.coreboot.service.customer;
 
 import com.arcade.coreboot.entity.Customer;
 import jakarta.validation.Valid;
